@@ -1,0 +1,16 @@
+#!/bin/sh
+
+case "$1" in
+  start)
+    export XDG_CONFIG_HOME=/mnt/sdcard
+    export ROMS_HOME=/mnt/sdcard/roms # directory to start scan content in RetroArch
+    { { /retroarch/retroarch -v --log-file /dev/console && halt; } || echo "TODO: handle error"; } &
+    ;;
+  stop)
+    killall -9 retroarch
+    ;;
+  *)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac

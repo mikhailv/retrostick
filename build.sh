@@ -8,3 +8,4 @@ export DEVICE_NAME=gamesticklite-v5
 
 (cd base && ./build.sh)
 (cd RetroArch && ./build.sh)
+(cd rootfs && ./build.sh)

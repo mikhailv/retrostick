@@ -4,6 +4,8 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+OUT=out/retroarch
+
 if [ ! -z "${APPLY_PATCH-}" ]; then
   git apply --directory=RetroArch \
       01-sound-fix.patch \
@@ -16,8 +18,8 @@ rm -f RetroArch/retroarch
 
 make -C RetroArch -f Makefile.gslv5 -j
 
-cp RetroArch/retroarch out/
+cp RetroArch/retroarch "${OUT}"
 
 if [ ! -z "${CHOWN_OUT-}" ]; then
-  chown "${CHOWN_OUT}" out/retroarch
+  chown "${CHOWN_OUT}" "${OUT}"
 fi

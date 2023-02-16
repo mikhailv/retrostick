@@ -12,8 +12,8 @@ VOLUME /build/out
 
 ARG DEVICE_NAME
 
-# unpack squashfs dump
 COPY "devices/${DEVICE_NAME}/rootfs.squashfs" /rootfs.squashfs
+# unpack squashfs dump
 RUN unsquashfs /rootfs.squashfs
 
 # copy required libraries for ARM from dumped rootfs
