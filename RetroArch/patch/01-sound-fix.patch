@@ -1,0 +1,69 @@
+diff --git a/audio/drivers/alsathread.c b/audio/drivers/alsathread.c
+index 1e239ef119..10de64892a 100644
+--- a/audio/drivers/alsathread.c
++++ b/audio/drivers/alsathread.c
+@@ -220,7 +220,7 @@ static void *alsa_thread_init(const char *device,
+    if (!alsa->fifo_lock || !alsa->cond_lock || !alsa->cond || !alsa->buffer)
+       goto error;
+ 
+-   alsa->worker_thread = sthread_create(alsa_worker_thread, alsa);
++   alsa->worker_thread = sthread_create_named_with_priority(alsa_worker_thread, alsa, "alsa", true);
+    if (!alsa->worker_thread)
+    {
+       RARCH_ERR("error initializing worker thread");
+diff --git a/gfx/video_thread_wrapper.c b/gfx/video_thread_wrapper.c
+index bc4e1f9f6b..38d0a50d40 100644
+--- a/gfx/video_thread_wrapper.c
++++ b/gfx/video_thread_wrapper.c
+@@ -720,7 +720,7 @@ static bool video_thread_init(thread_video_t *thr,
+    thr->suppress_screensaver = true;
+    thr->last_time            = cpu_features_get_time_usec();
+ 
+-   if (!(thr->thread = sthread_create(video_thread_loop, thr)))
++   if (!(thr->thread = sthread_create_named_with_priority(video_thread_loop, thr, "video", false)))
+       return false;
+ 
+    pkt.type                  = CMD_INIT;
+diff --git a/libretro-common/rthreads/rthreads.c b/libretro-common/rthreads/rthreads.c
+index b611a3e443..e380bf4638 100644
+--- a/libretro-common/rthreads/rthreads.c
++++ b/libretro-common/rthreads/rthreads.c
+@@ -52,6 +52,7 @@
+ #include "ctr_pthread.h"
+ #else
+ #include <pthread.h>
++#include <sched.h>
+ #include <time.h>
+ #endif
+ 
+@@ -165,6 +166,30 @@ sthread_t *sthread_create(void (*thread_func)(void*), void *userdata)
+ #define HAVE_THREAD_ATTR
+ #endif
+ 
++sthread_t *sthread_create_named_with_priority(void (*thread_func)(void*), void *userdata, char *name, bool highprio)
++{
++   sthread_t *t = sthread_create(thread_func, userdata);
++   if (t) {
++      int policy = highprio ? SCHED_FIFO : SCHED_OTHER;
++      struct sched_param sparam = {
++         .sched_priority = sched_get_priority_max(policy),
++      };
++
++      int ret;
++      if ((ret = pthread_setname_np(t->id, name)) != 0) {
++         RARCH_ERR("sthread: pthread_setname_np error: %d\n", ret);
++      } else {
++         RARCH_LOG("sthread: set name '%s' for thread %u\n", name, t->id);
++      }
++      if ((ret = pthread_setschedparam(t->id, policy, &sparam)) != 0) {
++         RARCH_ERR("sthread: pthread_setschedparam error: %d\n", ret);
++      } else {
++         RARCH_LOG("sthread: set policy '%s' for thread %u\n", (highprio ? "SCHED_FIFO" : "SCHED_OTHER"), t->id);
++      }
++   }
++   return t;
++}
++
+ /**
+  * sthread_create_with_priority:
+  * @start_routine           : thread entry callback function

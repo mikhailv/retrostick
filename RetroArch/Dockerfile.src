@@ -1,0 +1,5 @@
+FROM retrostick-base
+
+COPY ./compile.sh /build/
+
+ENTRYPOINT ["bash", "/build/compile.sh"]

@@ -1,0 +1,53 @@
+diff --git a/frontend/drivers/platform_unix.c b/frontend/drivers/platform_unix.c
+index 15c047e5ad..5efa6bd310 100644
+--- a/frontend/drivers/platform_unix.c
++++ b/frontend/drivers/platform_unix.c
+@@ -2250,45 +2250,10 @@ static int frontend_unix_parse_drive_list(void *data, bool load_content)
+       strlcat(base_path, "/.config/retroarch", sizeof(base_path));
+    }
+ #endif
+-
+-   strlcpy(udisks_media_path, "/run/media", sizeof(udisks_media_path));
+-   if (user)
+-   {
+-      strlcat(udisks_media_path, "/", sizeof(udisks_media_path));
+-      strlcat(udisks_media_path, user, sizeof(udisks_media_path));
+-   }
+-
+-   if (!string_is_empty(base_path))
+-   {
+-      menu_entries_append(list, base_path,
+-            msg_hash_to_str(MENU_ENUM_LABEL_FILE_DETECT_CORE_LIST_PUSH_DIR),
+-            enum_idx,
+-            FILE_TYPE_DIRECTORY, 0, 0, NULL);
+-   }
+-   if (!string_is_empty(home))
+-   {
+-      menu_entries_append(list, home,
+-            msg_hash_to_str(MENU_ENUM_LABEL_FILE_DETECT_CORE_LIST_PUSH_DIR),
+-            enum_idx,
+-            FILE_TYPE_DIRECTORY, 0, 0, NULL);
+-   }
+-   if (path_is_directory(udisks_media_path))
+-   {
+-      menu_entries_append(list, udisks_media_path,
+-            msg_hash_to_str(MENU_ENUM_LABEL_FILE_DETECT_CORE_LIST_PUSH_DIR),
+-            enum_idx,
+-            FILE_TYPE_DIRECTORY, 0, 0, NULL);
+-   }
+-   if (path_is_directory("/media"))
+-   {
+-      menu_entries_append(list, "/media",
+-            msg_hash_to_str(MENU_ENUM_LABEL_FILE_DETECT_CORE_LIST_PUSH_DIR),
+-            enum_idx,
+-            FILE_TYPE_DIRECTORY, 0, 0, NULL);
+-   }
+-   if (path_is_directory("/mnt"))
++   const char *roms_home = getenv("ROMS_HOME");
++   if (!string_is_empty(roms_home))
+    {
+-      menu_entries_append(list, "/mnt",
++      menu_entries_append(list, roms_home,
+             msg_hash_to_str(MENU_ENUM_LABEL_FILE_DETECT_CORE_LIST_PUSH_DIR),
+             enum_idx,
+             FILE_TYPE_DIRECTORY, 0, 0, NULL);

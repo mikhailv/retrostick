@@ -1,0 +1,16 @@
+diff --git a/input/input_defines.h b/input/input_defines.h
+index 0280cd114d..908f9e4fae 100644
+--- a/input/input_defines.h
++++ b/input/input_defines.h
+@@ -24,9 +24,9 @@
+ 
+ RETRO_BEGIN_DECLS
+ 
+-#define MAX_USERS                      16
++#define MAX_USERS                      4
+ 
+-#define MAX_INPUT_DEVICES              16
++#define MAX_INPUT_DEVICES              4
+ 
+ #define RARCH_MAX_KEYS 137
+ 

@@ -1,0 +1,38 @@
+include version.all
+
+# General Shared Variables ############
+TARGET := retroarch
+
+all: $(TARGET)
+
+retroarch:
+	#Build the RetroArch Binary for GameStickLite v5 (ARMv7 Cortex A7)
+	CFLAGS="-O3 -marm -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ffast-math" ./configure --host=arm-linux-gnueabihf \
+		--disable-wayland --disable-x11 --disable-opengl1 --disable-opengl_core --disable-dsp_filter --disable-ffmpeg  --disable-sdl --disable-sdl2 --disable-networking --disable-imageviewer --disable-pulse --disable-oss --disable-discord --disable-7zip --disable-langextra \
+		--enable-kms --enable-threads --enable-egl --enable-opengl --enable-opengles --enable-udev --enable-alsa --enable-dr_mp3 --enable-freetype --enable-neon --enable-floathard --enable-builtinflac --enable-builtinzlib
+
+	make -j LIBS="-static-libstdc++ -lm -lrt -ldl -lssl -lasound -lfreetype -lpthread -ludev -lxkbcommon -lGLESv2 -lEGL -ldrm -Wl,-unresolved-symbols=ignore-in-shared-libs"
+	arm-linux-gnueabihf-strip -v retroarch
+	@echo "*********************************************************************"
+	@echo "***     GameStickLite v5 RetroArch binary built successfully!     ***"
+	@echo "*********************************************************************"
+
+clean:
+	rm -rf obj-unix
+	rm -f *.d
+	rm -f *.o
+	rm -f audio/*.o
+	rm -f conf/*.o
+	rm -f gfx/*.o
+	rm -f gfx/drivers_font/*.o
+	rm -f gfx/drivers_font_renderer/*.o
+	rm -f gfx/drivers_context/*.o
+	rm -f gfx/py_state/*.o
+	rm -f compat/*.o
+	rm -f record/*.o
+	rm -f input/*.o
+	rm -f tools/*.o
+	rm -f $(BINDIR)/retroarch
+	rm -f $(PNDDIR)/readme.html
+	rm -f retroarch
+
