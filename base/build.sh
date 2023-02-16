@@ -4,4 +4,4 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-docker build -t retrostick-base . --build-arg ROOTFS_DUMP=./rootfs-dumps/gamesticklite-v5/rootfs.squashfs
+docker build -t retrostick-base -f Dockerfile .. --build-arg DEVICE_NAME=${DEVICE_NAME}

@@ -8,17 +8,17 @@ RUN apt install -y openssl git make autoconf automake libtool squashfs-tools
 # install required libraries to get headers
 RUN apt install -y libudev-dev libxkbcommon-dev libgbm-dev libdrm-dev libasound2-dev libgles-dev libfreetype-dev libssl-dev
 
-ARG ROOTFS_DUMP
+VOLUME /build/out
+
+ARG DEVICE_NAME
 
 # unpack squashfs dump
-COPY "${ROOTFS_DUMP}" /rootfs.squashfs
+COPY "devices/${DEVICE_NAME}/rootfs.squashfs" /rootfs.squashfs
 RUN unsquashfs /rootfs.squashfs
 
 # copy required libraries for ARM from dumped rootfs
 RUN bash -c 'cp /squashfs-root/usr/lib/lib{EGL,GL,Mali,mali,asound,crypto,drm,freetype,gbm,jpeg,png,ssl,udev,xkbcommon,z}* \
                 /squashfs-root/lib/librt* \
                 /usr/lib/arm-linux-gnueabihf/'
-
-VOLUME /build/out
 
 WORKDIR /build

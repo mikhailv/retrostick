@@ -11,7 +11,10 @@ if [ ! -z "${APPLY_PATCH-}" ]; then
       03-scan-roms-home.patch
 fi
 
-make -B -C RetroArch -f Makefile.gslv5 -j
+# remove already built binary if exists to force rebuild
+rm -f RetroArch/retroarch
+
+make -C RetroArch -f Makefile.gslv5 -j
 
 cp RetroArch/retroarch out/
 
