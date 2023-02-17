@@ -17,7 +17,7 @@ COPY "devices/${DEVICE_NAME}/rootfs.squashfs" /rootfs.squashfs
 RUN unsquashfs /rootfs.squashfs
 
 # copy required libraries for ARM from dumped rootfs
-RUN bash -c 'cp /squashfs-root/usr/lib/lib{EGL,GL,Mali,mali,asound,crypto,drm,freetype,gbm,jpeg,png,ssl,udev,xkbcommon,z}* \
+RUN bash -c 'cp /squashfs-root/usr/lib/lib{EGL,GL,Mali,mali,asound,drm,freetype,gbm,udev,xkbcommon,z}* \
                 /squashfs-root/lib/librt* \
                 /usr/lib/arm-linux-gnueabihf/'
 

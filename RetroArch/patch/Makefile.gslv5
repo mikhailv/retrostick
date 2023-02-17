@@ -8,12 +8,53 @@ all: $(TARGET)
 retroarch:
 	#Build the RetroArch Binary for GameStickLite v5 (ARMv7 Cortex A7)
 
-	CFLAGS="-O3 -marm -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ffast-math" \
+	CFLAGS="-O3 -marm -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ffast-math -march=armv7ve" \
 	./configure --host=arm-linux-gnueabihf \
-		--disable-wayland --disable-x11 --disable-opengl1 --disable-opengl_core --disable-dsp_filter --disable-ffmpeg  --disable-sdl --disable-sdl2 --disable-networking --disable-imageviewer --disable-pulse --disable-oss --disable-discord --disable-7zip --disable-langextra \
-		--enable-kms --enable-threads --enable-egl --enable-opengl --enable-opengles --enable-udev --enable-alsa --enable-dr_mp3 --enable-freetype --enable-neon --enable-floathard --enable-builtinflac --enable-builtinzlib
-	make -j LIBS="-static-libstdc++ -lm -lrt -ldl -lssl -lasound -lfreetype -lpthread -ludev -lxkbcommon -lGLESv2 -lEGL -ldrm -Wl,-unresolved-symbols=ignore-in-shared-libs"
-	arm-linux-gnueabihf-strip -v retroarch
+		--disable-wayland \
+		--disable-x11 \
+		--disable-opengl1 \
+		--disable-opengl_core \
+		--disable-dsp_filter \
+		--disable-ffmpeg \
+		--disable-sdl \
+		--disable-sdl2 \
+		--disable-networking \
+		--disable-imageviewer \
+		--disable-screenshots \
+		--disable-pulse \
+		--disable-oss \
+		--disable-discord \
+		--disable-7zip \
+		--disable-langextra \
+		--disable-rewind \
+		--disable-runahead \
+		--disable-networkgamepad \
+		--disable-netplaydiscovery \
+		--disable-builtinglslang \
+		--disable-audiomixer \
+		--disable-accessibility \
+		--disable-bsv_movie \
+		--disable-crtswitchres \
+		--disable-video_layout \
+		--disable-overlay \
+		--enable-kms \
+		--enable-threads \
+		--enable-egl \
+		--enable-opengl \
+		--enable-opengles \
+		--enable-udev \
+		--enable-alsa \
+		--enable-dr_mp3 \
+		--enable-freetype \
+		--enable-neon \
+		--enable-floathard \
+		--enable-builtinflac \
+		--enable-builtinzlib
+
+	make -j LIBS="-static-libgcc -static-libstdc++ -lm -lrt -ldl -lasound -lfreetype -lpthread -ludev -lxkbcommon -lGLESv2 -lEGL -ldrm -Wl,-unresolved-symbols=ignore-in-shared-libs"
+
+	arm-linux-gnueabihf-strip -s -v retroarch
+
 	@echo "*********************************************************************"
 	@echo "***     GameStickLite v5 RetroArch binary built successfully!     ***"
 	@echo "*********************************************************************"

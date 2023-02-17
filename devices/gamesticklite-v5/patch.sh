@@ -51,4 +51,3 @@ cp -R ./files/* "${ROOT}"
 
 chmod -x ${ROOT}/etc/fstab
 chown -R 0:0 ${ROOT}/retroarch
-
