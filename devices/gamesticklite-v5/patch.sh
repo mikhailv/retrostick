@@ -26,7 +26,6 @@ rm ${ROOT}/etc/resolv.conf
 rm ${ROOT}/etc/retroarch.cfg
 rm ${ROOT}/etc/init.d/.S50ui.swp
 rm ${ROOT}/etc/init.d/S40network
-rm ${ROOT}/etc/init.d/S49usbdevice
 rm ${ROOT}/etc/init.d/S50dropbear
 rm ${ROOT}/etc/init.d/S50ui
 rm ${ROOT}/etc/init.d/testui
@@ -40,6 +39,7 @@ rm ${ROOT}/usr/bin/game_nosdcard
 rm ${ROOT}/usr/bin/retroarch
 rm ${ROOT}/usr/bin/retroarch-cg2glsl
 rm ${ROOT}/usr/bin/sqlite3
+rm ${ROOT}/usr/lib/libmali-utgard-400-r7p0-gbm.so
 rm ${ROOT}/usr/lib/libminigui*
 rm -r ${ROOT}/usr/local/share/minigui/
 rm -r ${ROOT}/usr/share/applications/
@@ -50,4 +50,3 @@ sed -i 's|$1$D365DXgu$l9XMXAsQyIkGBYcpisM531|$1$x$TKe3ZXqjjInoY/fk1nwNT/|g' ${RO
 cp -R ./files/* "${ROOT}"
 
 chmod -x ${ROOT}/etc/fstab
-chown -R 0:0 ${ROOT}/retroarch

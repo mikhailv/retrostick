@@ -10,46 +10,50 @@ retroarch:
 
 	CFLAGS="-O3 -marm -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ffast-math -march=armv7ve" \
 	./configure --host=arm-linux-gnueabihf \
-		--disable-wayland \
-		--disable-x11 \
-		--disable-opengl1 \
-		--disable-opengl_core \
+		--disable-7zip \
+		--disable-accessibility \
+		--disable-audiomixer \
+		--disable-bsv_movie \
+		--disable-builtinflac \
+		--disable-builtinglslang \
+		--disable-cdrom \
+		--disable-chd \
+		--disable-crtswitchres \
+		--disable-discord \
+		--disable-dr_mp3 \
 		--disable-dsp_filter \
 		--disable-ffmpeg \
-		--disable-sdl \
-		--disable-sdl2 \
-		--disable-networking \
-		--disable-imageviewer \
-		--disable-screenshots \
-		--disable-pulse \
-		--disable-oss \
-		--disable-discord \
-		--disable-7zip \
 		--disable-langextra \
+		--disable-netplaydiscovery \
+		--disable-networkgamepad \
+		--disable-networking \
+		--disable-online_updater \
+		--disable-opengl1 \
+		--disable-opengl_core \
+		--disable-oss \
+		--disable-overlay \
+		--disable-pulse \
 		--disable-rewind \
 		--disable-runahead \
-		--disable-networkgamepad \
-		--disable-netplaydiscovery \
-		--disable-builtinglslang \
-		--disable-audiomixer \
-		--disable-accessibility \
-		--disable-bsv_movie \
-		--disable-crtswitchres \
-		--disable-video_layout \
-		--disable-overlay \
-		--enable-kms \
-		--enable-threads \
+		--disable-screenshots \
+		--disable-sdl \
+		--disable-sdl2 \
+		--disable-vulkan_display \
+		--disable-wayland \
+		--disable-winrawinput \
+		--disable-x11 \
+		--enable-alsa \
+		--enable-builtinzlib \
 		--enable-egl \
+		--enable-floathard \
+		--enable-freetype \
+		--enable-imageviewer \
+		--enable-kms \
+		--enable-neon \
 		--enable-opengl \
 		--enable-opengles \
-		--enable-udev \
-		--enable-alsa \
-		--enable-dr_mp3 \
-		--enable-freetype \
-		--enable-neon \
-		--enable-floathard \
-		--enable-builtinflac \
-		--enable-builtinzlib
+		--enable-threads \
+		--enable-udev
 
 	make -j LIBS="-static-libgcc -static-libstdc++ -lm -lrt -ldl -lasound -lfreetype -lpthread -ludev -lxkbcommon -lGLESv2 -lEGL -ldrm -Wl,-unresolved-symbols=ignore-in-shared-libs"
 
