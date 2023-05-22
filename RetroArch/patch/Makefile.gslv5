@@ -23,7 +23,6 @@ retroarch:
 		--disable-dr_mp3 \
 		--disable-dsp_filter \
 		--disable-ffmpeg \
-		--disable-langextra \
 		--disable-netplaydiscovery \
 		--disable-networkgamepad \
 		--disable-networking \
@@ -49,6 +48,7 @@ retroarch:
 		--enable-freetype \
 		--enable-imageviewer \
 		--enable-kms \
+		--enable-langextra \
 		--enable-neon \
 		--enable-opengl \
 		--enable-opengles \
