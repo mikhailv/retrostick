@@ -7,10 +7,12 @@ set -o nounset
 OUT=out/retroarch
 
 if [ ! -z "${APPLY_PATCH-}" ]; then
-  git apply --directory=RetroArch \
+  git apply --whitespace=fix --directory=RetroArch \
       01-sound-fix.patch \
       02-max-users.patch \
-      03-scan-roms-home.patch
+      03-scan-roms-home.patch \
+      04-disable-search.patch \
+      05-fix-keyboard-detection.patch
 fi
 
 # remove already built binary if exists to force rebuild

@@ -2,7 +2,7 @@
 
 case "$1" in
   start)
-    { { /mnt/sdcard/retroarch/start.sh && halt; } || echo "TODO: handle error"; } &
+    { { /retroarch/start.sh && halt; } || echo "TODO: handle error"; } &
     ;;
   stop)
     killall -9 retroarch

@@ -37,6 +37,7 @@ retroarch:
 		--disable-screenshots \
 		--disable-sdl \
 		--disable-sdl2 \
+		--disable-slang \
 		--disable-vulkan_display \
 		--disable-wayland \
 		--disable-winrawinput \
@@ -54,6 +55,10 @@ retroarch:
 		--enable-opengles \
 		--enable-threads \
 		--enable-udev
+
+	#sed -i 's|HAVE_XKBCOMMON = 1|HAVE_XKBCOMMON = 0|g' ./config.mk
+	#sed -i 's|XKBCOMMON_LIBS = -lxkbcommon|XKBCOMMON_LIBS = |g' ./config.mk
+	#sed -i 's|#define HAVE_XKBCOMMON 1|/* #undef HAVE_XKBCOMMON */|g' ./config.h
 
 	make -j LIBS="-static-libgcc -static-libstdc++ -lm -lrt -ldl -lasound -lfreetype -lpthread -ludev -lxkbcommon -lGLESv2 -lEGL -ldrm -Wl,-unresolved-symbols=ignore-in-shared-libs"
 
