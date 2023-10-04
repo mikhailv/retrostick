@@ -10,19 +10,15 @@ retroarch:
 
 	CFLAGS="-O3 -marm -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ffast-math -march=armv7ve" \
 	./configure --host=arm-linux-gnueabihf \
-		--disable-7zip \
 		--disable-accessibility \
 		--disable-audiomixer \
 		--disable-bsv_movie \
-		--disable-builtinflac \
-		--disable-builtinglslang \
 		--disable-cdrom \
-		--disable-chd \
 		--disable-crtswitchres \
 		--disable-discord \
-		--disable-dr_mp3 \
 		--disable-dsp_filter \
 		--disable-ffmpeg \
+		--disable-microphone \
 		--disable-netplaydiscovery \
 		--disable-networkgamepad \
 		--disable-networking \
@@ -32,7 +28,6 @@ retroarch:
 		--disable-oss \
 		--disable-overlay \
 		--disable-pulse \
-		--disable-rewind \
 		--disable-runahead \
 		--disable-screenshots \
 		--disable-sdl \
@@ -42,8 +37,13 @@ retroarch:
 		--disable-wayland \
 		--disable-winrawinput \
 		--disable-x11 \
+		--enable-7zip \
 		--enable-alsa \
+		--enable-builtinflac \
+		--enable-builtinglslang \
 		--enable-builtinzlib \
+		--enable-chd \
+		--enable-dr_mp3 \
 		--enable-egl \
 		--enable-floathard \
 		--enable-freetype \
@@ -53,14 +53,15 @@ retroarch:
 		--enable-neon \
 		--enable-opengl \
 		--enable-opengles \
+		--enable-rewind \
 		--enable-threads \
 		--enable-udev
 
-	#sed -i 's|HAVE_XKBCOMMON = 1|HAVE_XKBCOMMON = 0|g' ./config.mk
-	#sed -i 's|XKBCOMMON_LIBS = -lxkbcommon|XKBCOMMON_LIBS = |g' ./config.mk
-	#sed -i 's|#define HAVE_XKBCOMMON 1|/* #undef HAVE_XKBCOMMON */|g' ./config.h
+	sed -i 's|HAVE_XKBCOMMON = 1|HAVE_XKBCOMMON = 0|g' ./config.mk
+	sed -i 's|XKBCOMMON_LIBS = -lxkbcommon|XKBCOMMON_LIBS = |g' ./config.mk
+	sed -i 's|#define HAVE_XKBCOMMON 1|/* #undef HAVE_XKBCOMMON */|g' ./config.h
 
-	make -j LIBS="-static-libgcc -static-libstdc++ -lm -lrt -ldl -lasound -lfreetype -lpthread -ludev -lxkbcommon -lGLESv2 -lEGL -ldrm -Wl,-unresolved-symbols=ignore-in-shared-libs"
+	make -j LIBS="-static-libgcc -static-libstdc++ -lm -lrt -ldl -lasound -lfreetype -lpthread -ludev -lGLESv2 -lEGL -ldrm -Wl,-unresolved-symbols=ignore-in-shared-libs"
 
 	arm-linux-gnueabihf-strip -s -v retroarch
 
