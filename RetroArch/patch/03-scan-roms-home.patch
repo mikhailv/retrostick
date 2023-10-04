@@ -1,17 +1,19 @@
 diff --git a/frontend/drivers/platform_unix.c b/frontend/drivers/platform_unix.c
-index 15c047e5ad..5efa6bd310 100644
+index 90377193ed..2d501c56fe 100644
 --- a/frontend/drivers/platform_unix.c
 +++ b/frontend/drivers/platform_unix.c
-@@ -2250,45 +2250,10 @@ static int frontend_unix_parse_drive_list(void *data, bool load_content)
-       strlcat(base_path, "/.config/retroarch", sizeof(base_path));
+@@ -2241,47 +2241,10 @@ static int frontend_unix_parse_drive_list(void *data, bool load_content)
+       strlcpy(base_path + _len, "/.config/retroarch", sizeof(base_path) - _len);
     }
  #endif
 -
--   strlcpy(udisks_media_path, "/run/media", sizeof(udisks_media_path));
--   if (user)
 -   {
--      strlcat(udisks_media_path, "/", sizeof(udisks_media_path));
--      strlcat(udisks_media_path, user, sizeof(udisks_media_path));
+-      size_t _len = strlcpy(udisks_media_path, "/run/media", sizeof(udisks_media_path));
+-      if (user)
+-      {
+-         _len += strlcpy(udisks_media_path + _len, "/", sizeof(udisks_media_path) - _len);
+-         strlcpy(udisks_media_path + _len, user, sizeof(udisks_media_path) - _len);
+-      }
 -   }
 -
 -   if (!string_is_empty(base_path))

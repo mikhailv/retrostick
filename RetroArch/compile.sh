@@ -7,7 +7,7 @@ set -o nounset
 OUT=out/retroarch
 
 if [ ! -z "${APPLY_PATCH-}" ]; then
-  git apply --whitespace=fix --directory=RetroArch \
+  git apply -v --whitespace=fix --directory=RetroArch \
       01-sound-fix.patch \
       02-max-users.patch \
       03-scan-roms-home.patch \
@@ -18,7 +18,7 @@ fi
 # remove already built binary if exists to force rebuild
 rm -f RetroArch/retroarch
 
-make -C RetroArch -f Makefile.gslv5 -j
+make -C RetroArch -f Makefile.gslv5 -j 8
 
 cp RetroArch/retroarch "${OUT}"
 

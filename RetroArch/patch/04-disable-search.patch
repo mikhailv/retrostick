@@ -1,8 +1,8 @@
 diff --git a/menu/menu_driver.c b/menu/menu_driver.c
-index 77d799f132..ab0e6c424b 100644
+index 846371904d..2edb44598e 100644
 --- a/menu/menu_driver.c
 +++ b/menu/menu_driver.c
-@@ -8160,7 +8160,7 @@ int generic_menu_entry_action(
+@@ -7644,7 +7644,7 @@ int generic_menu_entry_action(
                    entry->label, entry->type, i, entry->entry_idx);
           break;
        case MENU_ACTION_SEARCH:

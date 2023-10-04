@@ -1,10 +1,10 @@
 diff --git a/input/input_defines.h b/input/input_defines.h
-index 0280cd114d..908f9e4fae 100644
+index bdd36fc37a..60474b2fab 100644
 --- a/input/input_defines.h
 +++ b/input/input_defines.h
-@@ -24,9 +24,9 @@
- 
- RETRO_BEGIN_DECLS
+@@ -22,9 +22,9 @@
+
+ #include <retro_common_api.h>
  
 -#define MAX_USERS                      16
 +#define MAX_USERS                      4

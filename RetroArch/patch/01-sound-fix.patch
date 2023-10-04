@@ -1,18 +1,18 @@
 diff --git a/audio/drivers/alsathread.c b/audio/drivers/alsathread.c
-index 1e239ef119..10de64892a 100644
+index 030f23dad0..555ae515a1 100644
 --- a/audio/drivers/alsathread.c
 +++ b/audio/drivers/alsathread.c
-@@ -220,7 +220,7 @@ static void *alsa_thread_init(const char *device,
-    if (!alsa->fifo_lock || !alsa->cond_lock || !alsa->cond || !alsa->buffer)
+@@ -140,7 +140,7 @@ static void *alsa_thread_init(const char *device,
+    if (!alsa->info.fifo_lock || !alsa->info.cond_lock || !alsa->info.cond || !alsa->info.buffer)
        goto error;
- 
--   alsa->worker_thread = sthread_create(alsa_worker_thread, alsa);
-+   alsa->worker_thread = sthread_create_named_with_priority(alsa_worker_thread, alsa, "alsa", true);
-    if (!alsa->worker_thread)
+
+-   alsa->info.worker_thread = sthread_create(alsa_worker_thread, alsa);
++   alsa->info.worker_thread = sthread_create_named_with_priority(alsa_worker_thread, alsa, "alsa", true);
+    if (!alsa->info.worker_thread)
     {
-       RARCH_ERR("error initializing worker thread");
+       RARCH_ERR("[ALSA]: Failed to initialize worker thread\n");
 diff --git a/gfx/video_thread_wrapper.c b/gfx/video_thread_wrapper.c
-index 26eadc4ce4..d9cbfddf06 100644
+index 6b81fbee07..1b513f7c36 100644
 --- a/gfx/video_thread_wrapper.c
 +++ b/gfx/video_thread_wrapper.c
 @@ -720,7 +720,7 @@ static bool video_thread_init(thread_video_t *thr,
@@ -25,7 +25,7 @@ index 26eadc4ce4..d9cbfddf06 100644
 
     pkt.type                  = CMD_INIT;
 diff --git a/libretro-common/rthreads/rthreads.c b/libretro-common/rthreads/rthreads.c
-index d1bceb468e..c0cafd69ae 100644
+index b923a8e290..475bd1aaf9 100644
 --- a/libretro-common/rthreads/rthreads.c
 +++ b/libretro-common/rthreads/rthreads.c
 @@ -53,6 +53,7 @@
