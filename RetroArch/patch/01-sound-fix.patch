@@ -12,7 +12,7 @@ index 030f23dad0..555ae515a1 100644
     {
        RARCH_ERR("[ALSA]: Failed to initialize worker thread\n");
 diff --git a/gfx/video_thread_wrapper.c b/gfx/video_thread_wrapper.c
-index 6b81fbee07..1b513f7c36 100644
+index ad369cd2e1..fdca796152 100644
 --- a/gfx/video_thread_wrapper.c
 +++ b/gfx/video_thread_wrapper.c
 @@ -720,7 +720,7 @@ static bool video_thread_init(thread_video_t *thr,
@@ -25,7 +25,7 @@ index 6b81fbee07..1b513f7c36 100644
 
     pkt.type                  = CMD_INIT;
 diff --git a/libretro-common/rthreads/rthreads.c b/libretro-common/rthreads/rthreads.c
-index b923a8e290..475bd1aaf9 100644
+index ff11978668..87d9fb7c30 100644
 --- a/libretro-common/rthreads/rthreads.c
 +++ b/libretro-common/rthreads/rthreads.c
 @@ -53,6 +53,7 @@
@@ -36,7 +36,7 @@ index b923a8e290..475bd1aaf9 100644
  #include <time.h>
  #endif
 
-@@ -65,6 +66,8 @@
+@@ -69,6 +70,8 @@
  #include <mach/mach.h>
  #endif
 
@@ -45,15 +45,15 @@ index b923a8e290..475bd1aaf9 100644
  struct thread_data
  {
     void (*func)(void*);
-@@ -166,6 +169,30 @@ sthread_t *sthread_create(void (*thread_func)(void*), void *userdata)
+@@ -160,6 +163,30 @@ sthread_t *sthread_create(void (*thread_func)(void*), void *userdata)
  #define HAVE_THREAD_ATTR
  #endif
- 
+
 +sthread_t *sthread_create_named_with_priority(void (*thread_func)(void*), void *userdata, char *name, bool highprio)
 +{
 +   sthread_t *t = sthread_create(thread_func, userdata);
 +   if (t) {
-+      int policy = highprio ? SCHED_FIFO : SCHED_OTHER;
++      int policy = highprio ? SCHED_RR : SCHED_OTHER;
 +      struct sched_param sparam = {
 +         .sched_priority = sched_get_priority_max(policy),
 +      };
@@ -67,12 +67,12 @@ index b923a8e290..475bd1aaf9 100644
 +      if ((ret = pthread_setschedparam(t->id, policy, &sparam)) != 0) {
 +         RARCH_ERR("sthread: pthread_setschedparam error: %d\n", ret);
 +      } else {
-+         RARCH_LOG("sthread: set policy '%s' for thread %u\n", (highprio ? "SCHED_FIFO" : "SCHED_OTHER"), t->id);
++         RARCH_LOG("sthread: set priority %d and policy '%s' for thread %u\n", sparam.sched_priority, (highprio ? "SCHED_RR" : "SCHED_OTHER"), t->id);
 +      }
 +   }
 +   return t;
 +}
 +
- /**
-  * sthread_create_with_priority:
-  * @start_routine           : thread entry callback function
+ sthread_t *sthread_create_with_priority(void (*thread_func)(void*), void *userdata, int thread_priority)
+ {
+ #ifdef HAVE_THREAD_ATTR
