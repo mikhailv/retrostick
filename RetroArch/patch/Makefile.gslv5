@@ -14,6 +14,7 @@ retroarch:
 		--disable-audiomixer \
 		--disable-bsv_movie \
 		--disable-cdrom \
+		--disable-cheevos \
 		--disable-crtswitchres \
 		--disable-discord \
 		--disable-dsp_filter \
@@ -27,15 +28,13 @@ retroarch:
 		--disable-opengl_core \
 		--disable-oss \
 		--disable-overlay \
-		--disable-pulse \
 		--disable-runahead \
 		--disable-screenshots \
 		--disable-sdl \
 		--disable-sdl2 \
 		--disable-slang \
-		--disable-vulkan_display \
+		--disable-translate \
 		--disable-wayland \
-		--disable-winrawinput \
 		--disable-x11 \
 		--enable-7zip \
 		--enable-alsa \

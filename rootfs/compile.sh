@@ -8,6 +8,8 @@ OUT=out/rootfs.squashfs
 
 (cd ./device && ROOT=/squashfs-root bash ./patch.sh)
 
+cp ./lib/alsa/out/libasound.so.2.0.0 /squashfs-root/usr/lib/
+
 mksquashfs /squashfs-root/ "${OUT}" -noappend
 
 if [ ! -z "${CHOWN_OUT-}" ]; then
